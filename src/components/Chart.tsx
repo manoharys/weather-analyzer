@@ -53,6 +53,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
     if (type === "bar") {
       return (
         <Bar
+          style={{ color: "black" }}
           options={options}
           data={chartData as any}
         />
@@ -61,6 +62,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
 
     return (
       <Line
+        style={{ color: "black" }}
         options={options}
         data={chartData as any}
       />
@@ -69,7 +71,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
 
   return (
     <div className='chart-container'>
-      <h3>{title}</h3>
+      <h3 style={{ color: "black" }}>{title}</h3>
       <div style={{ height: 300 }}>{renderChart()}</div>
     </div>
   );
