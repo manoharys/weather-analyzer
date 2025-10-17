@@ -7,9 +7,19 @@ type Page = "overview" | "detailed-insights";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("overview");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedStart, setSelectedStart] = useState<string>("");
+  const [selectedEnd, setSelectedEnd] = useState<string>("");
 
   const navigateToPage = (page: Page) => {
     setCurrentPage(page);
+  };
+
+  const handleGoToDetails = (loc: string, start: string, end: string) => {
+    setSelectedLocation(loc);
+    setSelectedStart(start);
+    setSelectedEnd(end);
+    navigateToPage("detailed-insights");
   };
 
   const renderPage = () => {
@@ -17,14 +27,18 @@ function App() {
       case "overview":
         return (
           <Overview
-            onNavigateToDetailed={() => navigateToPage("detailed-insights")}
+            onNavigateToDetailed={(loc, start, end) =>
+              handleGoToDetails(loc, start, end)
+            }
           />
         );
-
       case "detailed-insights":
         return (
           <DetailedInsights
             onNavigateToOverview={() => navigateToPage("overview")}
+            initialLocation={selectedLocation}
+            initialStartDate={selectedStart}
+            initialEndDate={selectedEnd}
           />
         );
       default:

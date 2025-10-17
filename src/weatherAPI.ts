@@ -33,7 +33,32 @@ export const fetchDailyWeather = async (
     const response = await fetch(`${OPEN_METEO_URL}?${params}`);
     return await response.json();
   } catch (error) {
-    console.error("Error fetching daily weather:", error);
+    console.error("hererere error cameeee", error);
+    throw error;
+  }
+};
+
+export const fetchHourlyWeather = async (
+  lat: number,
+  lon: number,
+  startDate: string,
+  endDate: string
+) => {
+  const params = new URLSearchParams({
+    latitude: lat.toString(),
+    longitude: lon.toString(),
+    start_date: startDate,
+    end_date: endDate,
+    hourly:
+      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,pressure_msl,wind_speed_10m,wind_speed_100m",
+    timezone: "auto",
+  });
+
+  try {
+    const response = await fetch(`${OPEN_METEO_URL}?${params}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching hourly weather:", error);
     throw error;
   }
 };

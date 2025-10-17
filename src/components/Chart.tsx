@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   Chart as ChartJS,
@@ -29,15 +30,23 @@ interface ChartProps {
     labels: string[];
     datasets: unknown[];
   };
+  optionsOverride?: unknown;
 }
 
-const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
-  const options = {
+const Chart: React.FC<ChartProps> = ({
+  title,
+  data,
+  type,
+  chartData,
+  optionsOverride,
+}) => {
+  const options: any = {
     responsive: true,
     plugins: {
       legend: { display: true, position: "top" as const },
     },
     maintainAspectRatio: false,
+    scales: (optionsOverride as { scales?: unknown })?.scales,
   };
 
   const renderChart = () => {
@@ -45,7 +54,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
       return (
         <div className='chart-placeholder'>
           <p>{title} Chart</p>
-          <p>Data: {data.length} points</p>
+          <p>Data: 0 points</p>
         </div>
       );
     }
@@ -55,7 +64,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
         <Bar
           style={{ color: "black" }}
           options={options}
-          data={chartData as any}
+          data={chartData as unknown as any}
         />
       );
     }
@@ -64,7 +73,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
       <Line
         style={{ color: "black" }}
         options={options}
-        data={chartData as any}
+        data={chartData as unknown as any}
       />
     );
   };
@@ -72,6 +81,7 @@ const Chart: React.FC<ChartProps> = ({ title, data, type, chartData }) => {
   return (
     <div className='chart-container'>
       <h3 style={{ color: "black" }}>{title}</h3>
+      <p style={{ color: "black" }}>Data: {data.length} points</p>
       <div style={{ height: 300 }}>{renderChart()}</div>
     </div>
   );
