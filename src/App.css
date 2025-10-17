@@ -236,3 +236,49 @@
   font-size: 1.25rem;
   font-weight: 600;
 }
+
+.app {
+  overflow-x: hidden;
+}
+.navigation {
+  overflow-x: auto;
+}
+.navigation button {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .filter-group select,
+  .filter-group input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .date-inputs {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .chart-container {
+    padding: 1rem;
+  }
+  .chart-container > div {
+    height: 220px !important;
+  }
+  .overview-page header,
+  .detailed-insights-page header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
