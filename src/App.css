@@ -1,7 +1,8 @@
 .app {
   min-height: 100vh;
   background-color: #f8fafc;
-  width: 100vw;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .navigation {
