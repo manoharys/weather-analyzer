@@ -29,12 +29,6 @@ const Overview: React.FC<OverviewProps> = ({ onNavigateToDetailed }) => {
   const [weatherData, setWeatherData] = useState<DailyResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("startDate", startDate);
-  console.log("endDate", endDate);
-  console.log("selectedLocation", selectedLocation);
-
-  console.log("weather Data", weatherData);
-
   const handleFetchData = async () => {
     if (!startDate || !endDate) return;
 
