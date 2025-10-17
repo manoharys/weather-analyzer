@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
+import Loading from "./Loading";
 
 ChartJS.register(
   CategoryScale,
@@ -52,10 +53,10 @@ const Chart: React.FC<ChartProps> = ({
   const renderChart = () => {
     if (!chartData) {
       return (
-        <div className='chart-placeholder'>
-          <p>{title} Chart</p>
-          <p>Data: 0 points</p>
-        </div>
+        <Loading
+          message={`Loading ${title}…`}
+          height={300}
+        />
       );
     }
 
@@ -81,7 +82,9 @@ const Chart: React.FC<ChartProps> = ({
   return (
     <div className='chart-container'>
       <h3 style={{ color: "black" }}>{title}</h3>
-      <p style={{ color: "black" }}>Data: {data.length} points</p>
+      <p style={{ color: "black" }}>
+        {chartData ? `Data: ${data.length} points` : "Loading…"}
+      </p>
       <div style={{ height: 300 }}>{renderChart()}</div>
     </div>
   );
