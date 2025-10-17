@@ -1,23 +1,52 @@
 import { useState } from "react";
+import Overview from "./pages/Overview";
 import "./App.css";
+import DetailedInsights from "./pages/DetailedInsights";
 
 type Page = "overview" | "detailed-insights";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("overview");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedStart, setSelectedStart] = useState<string>("");
+  const [selectedEnd, setSelectedEnd] = useState<string>("");
 
   const navigateToPage = (page: Page) => {
     setCurrentPage(page);
   };
 
+  const handleGoToDetails = (loc: string, start: string, end: string) => {
+    setSelectedLocation(loc);
+    setSelectedStart(start);
+    setSelectedEnd(end);
+    navigateToPage("detailed-insights");
+  };
+
   const renderPage = () => {
     switch (currentPage) {
       case "overview":
-        return <div>Overview Page</div>;
+        return (
+          <Overview
+            onNavigateToDetailed={(loc, start, end) =>
+              handleGoToDetails(loc, start, end)
+            }
+          />
+        );
       case "detailed-insights":
-        return <div>Detailed Insights Page</div>;
+        return (
+          <DetailedInsights
+            onNavigateToOverview={() => navigateToPage("overview")}
+            initialLocation={selectedLocation}
+            initialStartDate={selectedStart}
+            initialEndDate={selectedEnd}
+          />
+        );
       default:
-        return <div>No Page Found</div>;
+        return (
+          <Overview
+            onNavigateToDetailed={() => navigateToPage("detailed-insights")}
+          />
+        );
     }
   };
 
