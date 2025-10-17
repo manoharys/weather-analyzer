@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Overview from "./pages/Overview";
 import "./App.css";
+import DetailedInsights from "./pages/DetailedInsights";
 
 type Page = "overview" | "detailed-insights";
 
@@ -21,9 +22,17 @@ function App() {
         );
 
       case "detailed-insights":
-        return <div>Detailed Insights Page</div>;
+        return (
+          <DetailedInsights
+            onNavigateToOverview={() => navigateToPage("overview")}
+          />
+        );
       default:
-        return <div>No Page Found</div>;
+        return (
+          <Overview
+            onNavigateToDetailed={() => navigateToPage("detailed-insights")}
+          />
+        );
     }
   };
 
