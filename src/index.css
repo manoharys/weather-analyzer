@@ -13,6 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  /* Prevent iOS from auto-zooming text inputs by respecting CSS sizes */
+  -webkit-text-size-adjust: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;

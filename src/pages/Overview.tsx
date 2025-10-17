@@ -70,9 +70,27 @@ const Overview: React.FC<OverviewProps> = ({ onNavigateToDetailed }) => {
         return {
           labels,
           datasets: [
-            { label: "Mean", data: weatherData.daily.temperature_2m_mean },
-            { label: "Max", data: weatherData.daily.temperature_2m_max },
-            { label: "Min", data: weatherData.daily.temperature_2m_min },
+            {
+              label: "Mean",
+              data: weatherData.daily.temperature_2m_mean,
+              borderColor: "#3b82f6",
+              backgroundColor: "rgba(59, 130, 246, 0.25)",
+              tension: 0.3,
+            },
+            {
+              label: "Max",
+              data: weatherData.daily.temperature_2m_max,
+              borderColor: "#ef4444",
+              backgroundColor: "rgba(239, 68, 68, 0.2)",
+              tension: 0.3,
+            },
+            {
+              label: "Min",
+              data: weatherData.daily.temperature_2m_min,
+              borderColor: "#10b981",
+              backgroundColor: "rgba(16, 185, 129, 0.2)",
+              tension: 0.3,
+            },
           ],
         };
       case "precipitation":
@@ -82,6 +100,8 @@ const Overview: React.FC<OverviewProps> = ({ onNavigateToDetailed }) => {
             {
               label: "Precipitation",
               data: weatherData.daily.precipitation_sum,
+              backgroundColor: "rgba(99, 102, 241, 0.5)",
+              borderColor: "#6366f1",
             },
           ],
         };
@@ -89,7 +109,13 @@ const Overview: React.FC<OverviewProps> = ({ onNavigateToDetailed }) => {
         return {
           labels,
           datasets: [
-            { label: "Wind Speed", data: weatherData.daily.wind_speed_10m_max },
+            {
+              label: "Wind Speed",
+              data: weatherData.daily.wind_speed_10m_max,
+              borderColor: "#22c55e",
+              backgroundColor: "rgba(34, 197, 94, 0.25)",
+              tension: 0.3,
+            },
           ],
         };
       default:

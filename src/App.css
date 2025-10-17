@@ -92,7 +92,7 @@
   padding: 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   background-color: white;
   min-width: 200px;
 }
@@ -276,7 +276,7 @@
     padding: 1rem;
   }
   .chart-container > div {
-    height: 220px !important;
+    height: 260px !important;
   }
   .overview-page header,
   .detailed-insights-page header {
