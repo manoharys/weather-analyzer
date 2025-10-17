@@ -10,6 +10,27 @@ interface DetailedInsightsProps {
   initialEndDate?: string;
 }
 
+const METRICS: Array<{
+  key: string;
+  label: string;
+  axisId: "yLeft" | "yRight";
+}> = [
+  { key: "temperature_2m", label: "Temperature", axisId: "yLeft" },
+  { key: "wind_speed_10m", label: "Wind 10m", axisId: "yRight" },
+  {
+    key: "apparent_temperature",
+    label: "Apparent Temperature",
+    axisId: "yLeft",
+  },
+  { key: "precipitation", label: "Precipitation", axisId: "yLeft" },
+  { key: "pressure_msl", label: "Pressure", axisId: "yLeft" },
+  {
+    key: "relative_humidity_2m",
+    label: "Relative Humidity",
+    axisId: "yLeft",
+  },
+];
+
 const DetailedInsights: React.FC<DetailedInsightsProps> = ({
   onNavigateToOverview,
   initialLocation = "New York, USA",
@@ -33,6 +54,17 @@ const DetailedInsights: React.FC<DetailedInsightsProps> = ({
   } | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [enabledKeys, setEnabledKeys] = useState<string[]>([
+    "temperature_2m",
+    "wind_speed_10m",
+  ]);
+
+  const toggleMetric = (key: string) => {
+    setEnabledKeys((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+  };
 
   const handleFetchData = async () => {
     if (!startDate || !endDate) return;
@@ -101,42 +133,20 @@ const DetailedInsights: React.FC<DetailedInsightsProps> = ({
       })
     );
 
-    console.log(labels);
-    const selected: Array<{
-      key: string;
-      label: string;
-      axisId: "yLeft" | "yRight";
-    }> = [
-      { key: "temperature_2m", label: "Temperature", axisId: "yLeft" },
-      { key: "wind_speed_10m", label: "Wind 10m", axisId: "yRight" },
-      {
-        key: "apparent_temperature",
-        label: "Apparent Temperature",
-        axisId: "yLeft",
-      },
-      { key: "precipitation", label: "Precipitation", axisId: "yLeft" },
-      { key: "pressure_msl", label: "Pressure", axisId: "yLeft" },
-      {
-        key: "relative_humidity_2m",
-        label: "Relative Humidity",
-        axisId: "yLeft",
-      },
-    ];
-
     const hourly = weatherData.hourly as unknown as Record<string, number[]>;
 
-    const datasets = selected
-      .filter((s) => hourly[s.key])
-      .map((s, i) => ({
-        label: s.label,
-        data: hourly[s.key] || [],
+    const activeMetrics = METRICS.filter((m) => enabledKeys.includes(m.key));
+
+    const datasets = activeMetrics
+      .filter((m) => hourly[m.key])
+      .map((m, i) => ({
+        label: m.label,
+        data: hourly[m.key] || [],
         borderColor: i === 0 ? "#3b82f6" : `#${getRanHex(6)}`,
         backgroundColor:
-          i === 0 ? "rgba(59,130,246,0.3)" : `#${getRanHex(6)},0.3)`,
-        yAxisID: s.axisId,
+          i === 0 ? "rgba(59,130,246,0.3)" : "rgba(59,130,246,0.15)",
+        yAxisID: m.axisId,
       }));
-
-    console.log("data sets", datasets);
 
     return { labels, datasets } as { labels: string[]; datasets: unknown[] };
   };
@@ -158,6 +168,27 @@ const DetailedInsights: React.FC<DetailedInsightsProps> = ({
         onFetchData={handleFetchData}
         isLoading={isLoading}
       />
+
+      <div
+        className='fields-filter'
+        style={{ padding: "0 2rem" }}
+      >
+        <div className='field-checkboxes'>
+          {METRICS.map((m) => (
+            <label
+              key={m.key}
+              style={{ color: "black" }}
+            >
+              <input
+                type='checkbox'
+                checked={enabledKeys.includes(m.key)}
+                onChange={() => toggleMetric(m.key)}
+              />
+              {m.label}
+            </label>
+          ))}
+        </div>
+      </div>
 
       <div className='chart-section'>
         <Chart
