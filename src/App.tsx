@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Overview from "./pages/Overview";
 import "./App.css";
 
 type Page = "overview" | "detailed-insights";
@@ -13,7 +14,12 @@ function App() {
   const renderPage = () => {
     switch (currentPage) {
       case "overview":
-        return <div>Overview Page</div>;
+        return (
+          <Overview
+            onNavigateToDetailed={() => navigateToPage("detailed-insights")}
+          />
+        );
+
       case "detailed-insights":
         return <div>Detailed Insights Page</div>;
       default:
