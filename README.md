@@ -16,4 +16,4 @@ Tech: React + TypeScript + Vite, Chart.js via react-chartjs-2.
 
 You can view the live demo here:
 
-- https://68f1fc9f2c4281007b9192ed--weather-analyze.netlify.app/
+- https://68f20fac83c23b000848580c--weather-analyze.netlify.app/ [This URL will change on each deploy]

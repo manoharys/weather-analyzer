@@ -177,7 +177,7 @@ const DetailedInsights: React.FC<DetailedInsightsProps> = ({
           {METRICS.map((m) => (
             <label
               key={m.key}
-              style={{ color: "black" }}
+              style={{ color: "black", marginTop: "12px" }}
             >
               <input
                 type='checkbox'
